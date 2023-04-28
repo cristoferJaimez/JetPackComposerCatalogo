@@ -18,10 +18,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,28 +44,49 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyBox("Android")
+                    //MyBox("Android")
+                    MyStateExample()
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun MySpacer(size : Int){
-    Spacer(modifier = Modifier
-        .width(0.dp)
-        .height(size.dp))
+fun MyStateExample() {
+    var counter by rememberSaveable {
+        mutableStateOf( 0)
+    }
+    Column(
+        Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { counter += 1 }) {
+            Text(text = "PUSH")
+        }
+        Text(text = "on push $counter")
+    }
 }
 
 @Composable
-fun MyComplexLayout(){
+fun MySpacer(size: Int) {
+    Spacer(
+        modifier = Modifier
+            .width(0.dp)
+            .height(size.dp)
+    )
+}
+
+@Composable
+fun MyComplexLayout() {
     Column(Modifier.fillMaxSize()) {
         Box(
             Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(Color.Cyan)) {
+                .background(Color.Cyan)
+        ) {
             Text(text = "Example 1", modifier = Modifier.align(Alignment.Center), Color.Red)
 
         }
@@ -68,17 +94,22 @@ fun MyComplexLayout(){
         Row(
             Modifier
                 .fillMaxWidth()
-                .weight(1f)) {
-            Box(modifier = Modifier
                 .weight(1f)
-                .fillMaxHeight()
-                .background(Color.Red)){
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .background(Color.Red)
+            ) {
                 Text(text = "Example 2", modifier = Modifier.align(Alignment.Center), Color.Black)
             }
-            Box(modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .background(Color.Green)){
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .background(Color.Green)
+            ) {
                 Text(text = "Example 3", modifier = Modifier.align(Alignment.Center), Color.Blue)
             }
         }
@@ -87,18 +118,20 @@ fun MyComplexLayout(){
             Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .background(Color.Magenta)) {
+                .background(Color.Magenta)
+        ) {
             Text(text = "Example 4", modifier = Modifier.align(Alignment.BottomCenter), Color.White)
         }
     }
 }
 
-
 @Composable
-fun MyRow(){
-    Row(modifier = Modifier
-        .fillMaxSize()
-        .horizontalScroll(rememberScrollState())) {
+fun MyRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .horizontalScroll(rememberScrollState())
+    ) {
         Text(text = "Hola", modifier = Modifier.weight(1f))
         Text(text = "Hola", modifier = Modifier.weight(1f))
         Text(text = "Hola", modifier = Modifier.weight(1f))
@@ -106,13 +139,14 @@ fun MyRow(){
     }
 }
 
-
 @Composable
-fun MyColumn(){
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)
-        .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceEvenly) {
+fun MyColumn() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceEvenly
+    ) {
         Text(text = "Example one", modifier = Modifier.background(Color.Red))
         Text(text = "Example one", modifier = Modifier.background(Color.Blue))
         Text(text = "Example one", modifier = Modifier.background(Color.Black))
@@ -122,13 +156,17 @@ fun MyColumn(){
 
 @Composable
 fun MyBox(name: String, modifier: Modifier = Modifier) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp), contentAlignment = Alignment.Center) {
-        Box(modifier = Modifier
-            .width(100.dp)
-            .height(100.dp)
-            .background(Color.Blue)){
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp), contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .width(100.dp)
+                .height(100.dp)
+                .background(Color.Blue)
+        ) {
             Text(text = "Box 2", modifier = Modifier.align(Alignment.Center), Color.White)
         }
     }
@@ -141,6 +179,7 @@ fun GreetingPreview() {
         //MyBox("Android")
         //MyColumn()
         //MyRow()
-        MyComplexLayout()
+        //MyComplexLayout()
+        MyStateExample()
     }
 }
